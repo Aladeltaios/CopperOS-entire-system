@@ -1,2 +1,0 @@
-Datas and images for 32-bit are strachet for the CHMOD command.
-Inputs are straight right from the cursor
