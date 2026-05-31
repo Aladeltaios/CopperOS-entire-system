@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>About CopperOS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="hero">
+    <img src="redsnake.png" alt="CopperOS" class="logo">
+    <h1>About CopperOS</h1>
+  </header>
+  <nav class="topnav">
+    <a href="index.html">Home</a>
+    <a href="faq.html">FAQ</a>
+    <a href="info.html">Info</a>
+  </nav>
+  <main class="container">
+    <section>
+      <h2>What is CopperOS?</h2>
+      <p>CopperOS is an experimental, minimal operating system targeting 32-bit x86 platforms and virtual machines. It's designed for learning OS internals, testing drivers and boot paths, and demonstrating a tiny freestanding C kernel with a simple bootloader.</p>
+    </section>
+    <section>
+      <h2>Technical highlights</h2>
+      <ul>
+        <li>Bootloader: custom assembly bootloader with El Torito hybrid ISO support</li>
+        <li>Kernel: freestanding C kernel linked with a small linker script</li>
+        <li>Drivers: VGA text/graphics, serial, basic filesystem support</li>
+        <li>Build system: Makefile to produce raw images, hybrid ISO and VirtualBox VDI</li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <p>© CopperOS</p>
+  </footer>
+</body>
+</html>

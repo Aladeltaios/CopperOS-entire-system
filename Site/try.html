@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Try CopperOS — In-Browser</title>
+  <link rel="stylesheet" href="styles.css">
+  <style> #screen{width:100%;height:480px;background:#000;border:1px solid #222} .controls{display:flex;gap:8px;justify-content:center;margin:8px}</style>
+</head>
+<body>
+  <header class="hero">
+    <img src="redsnake.png" alt="CopperOS" class="logo">
+    <h1>Try CopperOS</h1>
+    <p class="tagline">This page will attempt to run the ISO in your browser using a JS/WASM emulator (v86) if available. If it fails, download the ISO and run locally.</p>
+  </header>
+  <main class="container">
+    <div class="controls">
+      <button id="startBtn" class="btn">Start emulator</button>
+      <button id="kbdBtn" class="btn secondary">Show keyboard</button>
+      <a class="btn" href="build/copperos.iso">Download ISO</a>
+    </div>
+    <div style="text-align:center;margin-top:8px">
+      <a id="openOnline" class="btn secondary" style="display:none">Open in online emulator</a>
+    </div>
+    <div id="message" class="muted" style="text-align:center;margin-bottom:8px"></div>
+    <div id="screen"></div>
+  </main>
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const msg = document.getElementById('message');
+    let emulator = null;
+
+    async function loadScript(url){
+      return new Promise((resolve,reject)=>{
+        const s=document.createElement('script');s.src=url;s.onload=()=>resolve(true);s.onerror=()=>reject(false);document.head.appendChild(s);
+      });
+    }
+
+    async function startV86(){
+      msg.textContent = 'Preparing emulator...';
+      const candidates = [
+        'assets/v86/v86.js',
+        'https://copy.sh/v86/build/v86.js',
+        'https://unpkg.com/v86/build/v86.js',
+        'https://cdn.jsdelivr.net/gh/copy/v86@master/build/v86.js'
+      ];
+      let loaded=false;
+      for(const c of candidates){
+        try{
+          await loadScript(c);
+          if(window.V86Starter){
+            loaded=true; msg.textContent='Emulator script loaded.'; break;
+          }
+        }catch(e){ /* try next */ }
+      }
+      if(!loaded){ 
+        msg.textContent='Could not load in-browser emulator. You can open the ISO in an online emulator instead or download it.';
+        const online = document.getElementById('openOnline');
+        const base = window.location.origin + window.location.pathname.replace(/index\.html$|\/$/,'');
+          const isoUrl = base + 'build/copperos.iso';
+          online.href = 'https://copy.sh/v86/?cdrom=' + encodeURIComponent(isoUrl);
+        online.style.display = 'inline-block';
+        return; 
+      }
+      msg.textContent='Starting emulator...';
+      try{
+        emulator = new window.V86Starter({
+          wasm_path: 'assets/v86/v86.wasm',
+          memory_size: 64 * 1024 * 1024,
+          screen_container: document.getElementById('screen'),
+          autostart: true,
+          cdrom: { url: 'build/copperos.iso' }
+        });
+        emulator.add_listener('emulator-ready', () => { msg.textContent = 'Emulator started.'; });
+      }catch(e){ console.error(e); msg.textContent='Failed to start emulator.'; }
+    }
+
+    startBtn.addEventListener('click', startV86);
+
+    // On-screen keyboard toggle (very small helper)
+    document.getElementById('kbdBtn').addEventListener('click', ()=>{
+      const el = document.getElementById('screen');
+      if(!el) return;
+      // Focus to receive physical keyboard on mobile
+      el.tabIndex = 0;
+      el.focus();
+      msg.textContent = 'If you are on mobile/tablet, your soft keyboard should appear when the screen is focused.';
+    });
+  </script>
+</body>
+</html>
