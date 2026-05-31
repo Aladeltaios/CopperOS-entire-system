@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CopperOS v1.0 Copperhead - Browser-bootable hobby operating system</title>
+  <meta name="description" content="CopperOS v1.0 Copperhead is a compact BIOS-booting hobby OS with a freestanding C kernel, VESA graphics, built-in desktop apps, and a browser emulator route.">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="redsnake.png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "CopperOS",
+    "description": "Compact BIOS-booting hobby OS with a freestanding C kernel, VESA graphics, built-in desktop apps, and virtual machine demos.",
+    "applicationCategory": "OperatingSystem",
+    "operatingSystem": "x86",
+    "softwareVersion": "1.0",
+    "downloadUrl": "https://github.com/Aladeltaios/CopperOS-entire-system/releases/latest/download/copperos-release.tar.gz"
+  }
+  </script>
+</head>
+<body>
+  <nav class="topnav" aria-label="Primary navigation">
+    <a href="index.html">Home</a>
+    <a href="try.html">Try it</a>
+    <a href="download-release.html">Download</a>
+    <a href="faq.html">FAQ</a>
+    <a href="discussions/index.html">Discussions</a>
+    <a href="https://github.com/Aladeltaios/CopperOS-entire-system" target="_blank" rel="noopener noreferrer">Source</a>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <div class="brand-line">
+          <img src="redsnake.png" alt="CopperOS" class="logo">
+          v1.0 Copperhead
+        </div>
+        <h1>CopperOS</h1>
+        <p class="tagline">A compact BIOS-booting hobby OS with a freestanding C kernel, VESA graphics, a Windows 95-inspired desktop, and a browser emulator that loads the CopperOS ISO directly.</p>
+        <p class="cta">
+          <a class="btn" href="download-release.html">Download release</a>
+          <a class="btn secondary" href="try.html">Try it in browser</a>
+        </p>
+      </div>
+      <aside class="terminal" aria-label="Quick boot command">
+        <div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>release notes</div>
+        <div class="boot-card">
+          <span>Start</span>
+          <strong>NASM BIOS sector into a 32-bit freestanding C kernel</strong>
+          <span>Display</span>
+          <strong>VESA 1280x720x8 first, then compatible fallbacks</strong>
+          <span>Experience</span>
+          <strong>Setup wizard, login, desktop, apps, pointer, Start menu</strong>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="about">
+      <div class="grid">
+        <div class="wide">
+          <span class="label">Project</span>
+          <h2>Built for people who want to watch the machine become a desktop.</h2>
+          <p>CopperOS v1.0 Copperhead is intentionally compact: a BIOS boot sector written in NASM hands off to a freestanding 32-bit C kernel linked with an x86 cross-toolchain.</p>
+          <p>The release focuses on the full first-run arc. It boots, draws staged startup screens, collects setup details, plays a welcome animation, and lands on a black desktop with a taskbar, Start menu, windows, and pointer.</p>
+        </div>
+        <div class="narrow panel">
+          <span class="label">Release</span>
+          <h3>Copperhead is small on purpose</h3>
+          <p class="muted">This is a hobby OS for inspection, boot demos, and kernel-rendered UI experiments. Apps are built into the kernel, not separate user-space programs yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <span class="label">The experience</span>
+      <h2>Small enough to inspect, rich enough to explore.</h2>
+      <div class="grid">
+        <article class="panel feature">
+          <h3>Clean first start</h3>
+          <p class="muted">A tiny NASM boot path loads a freestanding 32-bit C kernel built for BIOS-era x86 graphics modes.</p>
+        </article>
+        <article class="panel feature">
+          <h3>Bright display</h3>
+          <p class="muted">The framebuffer targets HD 1280x720x8 first, then falls through broadly supported VESA modes.</p>
+        </article>
+        <article class="panel feature">
+          <h3>Smoother windows</h3>
+          <p class="muted">Off-screen frame composition reduces full-screen blinking and prepares the interface for smoother animation.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="desktop">
+      <span class="label">Desktop</span>
+      <h2>A tiny GUI with real things to open.</h2>
+      <div class="split-copy">
+        <p>CopperOS presents a Windows 95-inspired workspace with a black desktop, keyboard-driven pointer, taskbar, Start menu, window chrome, and setup-created login passcode.</p>
+        <p>Eight built-in apps ship with the release: File Explorer, Internet Explorer, Activity Manager, Paint, System Settings, System Updates, Calculator, and TXT Editor.</p>
+      </div>
+      <div class="app-grid" aria-label="CopperOS built-in applications">
+        <span>File Explorer</span>
+        <span>Internet Explorer</span>
+        <span>Activity Manager</span>
+        <span>Paint</span>
+        <span>System Settings</span>
+        <span>System Updates</span>
+        <span>Calculator</span>
+        <span>TXT Editor</span>
+      </div>
+    </section>
+
+    <section id="first-run">
+      <span class="label">First boot</span>
+      <h2>Setup is part of the release, not a placeholder.</h2>
+      <div class="release-rail">
+        <article>
+          <strong>Identity</strong>
+          <p class="muted">The wizard collects a username and creates a 4-digit passcode for the login screen.</p>
+        </article>
+        <article>
+          <strong>Install choices</strong>
+          <p class="muted">The setup flow walks through install or try mode, disk target selection, desktop theme, and network choice.</p>
+        </article>
+        <article>
+          <strong>After setup</strong>
+          <p class="muted">A welcome animation plays before the desktop becomes available with the created passcode.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="screenshots">
+      <span class="label">Preview</span>
+      <h2>Kernel-rendered visuals.</h2>
+      <div class="shots">
+        <img src="assets/screenshot1.png" alt="CopperOS screenshot showing the operating system interface">
+        <img src="assets/screenshot2.png" alt="CopperOS screenshot showing another operating system screen">
+      </div>
+    </section>
+
+    <section id="download">
+      <span class="label">Downloads</span>
+      <h2>Get the current Copperhead artifacts.</h2>
+      <article class="download-card">
+        <div>
+          <h3>Release archive</h3>
+          <p>Complete packaged release for offline use.</p>
+        </div>
+        <a class="btn" href="https://github.com/Aladeltaios/CopperOS-entire-system/releases/latest/download/copperos-release.tar.gz">Download tar.gz</a>
+      </article>
+      <article class="download-card">
+        <div>
+          <h3>ISO image</h3>
+          <p>Use this with QEMU, VirtualBox, or the browser emulator page.</p>
+        </div>
+        <a class="btn secondary" href="https://raw.githubusercontent.com/Aladeltaios/CopperOS-entire-system/main/build/copperos.iso">Download ISO</a>
+      </article>
+      <article class="download-card">
+        <div>
+          <h3>VirtualBox VDI</h3>
+          <p>Attach this image as a disk in a VirtualBox VM.</p>
+        </div>
+        <a class="btn secondary" href="https://raw.githubusercontent.com/Aladeltaios/CopperOS-entire-system/main/build/copperos.vdi">Download VDI</a>
+      </article>
+    </section>
+
+    <section id="install">
+      <span class="label">Run locally</span>
+      <h2>Commands that are easy to read.</h2>
+      <div class="terminal">
+        <div class="terminal-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>qemu</div>
+        <pre><code># Download the ISO from the release page, then run:
+qemu-system-x86_64 -cdrom copperos.iso -m 256M -boot d
+
+# From source:
+make
+make run</code></pre>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>CopperOS is an experimental open-source operating system. Use it at your own risk.</p>
+    <p><a href="terms-service.html">Terms</a> · <a href="info.html">Project info</a></p>
+  </footer>
+  <div id="copperos-user-banner" style="position:fixed;right:12px;bottom:12px;font-size:14px;color:#444"></div>
+  <script src="scripts/discussions.js"></script>
+</body>
+</html>
