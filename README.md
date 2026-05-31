@@ -1,4 +1,4 @@
-# CopperOS v1.0 Copperhead
+# CopperOS
 
 CopperOS is a small BIOS-booting hobby OS that now uses a freestanding `C` kernel with a tiny NASM boot path and runs under `qemu-system-x86_64` on Apple Silicon.
 
@@ -63,3 +63,7 @@ make run-headless
 - `System Settings` can choose Wi-Fi, desktop theme, Start menu style, and view diagnostics.
 - Build a VM boot image with `make`; build the ISO artifact with `make vbox`.
 - The pointer works with keyboard + mouse input and the redraw path now renders through an off-screen buffer to prevent corruption and blinking.
+
+
+**NOTE: CopperOS is an experimental operating system.
+Do not use in production or on real hardware yet. Recomended try on a VM and for curiosities you can try it on a laptop or pc that you don't use**
