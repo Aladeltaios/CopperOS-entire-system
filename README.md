@@ -63,3 +63,6 @@ make run-headless
 - `System Settings` can choose Wi-Fi, desktop theme, Start menu style, and view diagnostics.
 - Build a VM boot image with `make`; build the ISO artifact with `make vbox`.
 - The pointer works with keyboard + mouse input and the redraw path now renders through an off-screen buffer to prevent corruption and blinking.
+
+**NOTE: CopperOS is an experimental operating system.
+Do not use in production or on real hardware yet.**
