@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin — Discussions</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>.wrap{max-width:1000px;margin:18px auto} .panel{border:1px solid #e6e6e6;padding:12px;margin-bottom:12px}</style>
+</head>
+<body>
+  <nav class="topnav" aria-label="Primary navigation">
+    <a href="../index.html">Home</a>
+    <a href="index.html">Discussions</a>
+  </nav>
+  <main class="wrap">
+    <h1>Admin</h1>
+    <p>Enter admin code to manage users and posts.</p>
+    <div>
+      <input id="code" placeholder="Admin code">
+      <button id="enter" class="btn">Enter</button>
+    </div>
+
+    <div id="adminArea"></div>
+  </main>
+  <script>
+  (function(){
+    const area = document.getElementById('adminArea');
+    document.getElementById('enter').addEventListener('click', async ()=>{
+      const code = document.getElementById('code').value.trim(); if(!code) return alert('Enter code');
+      const headers = { 'x-admin-code': code };
+      try{
+        const [usersRes, postsRes] = await Promise.all([
+          fetch('/api/admin/users', { headers }),
+          fetch('/api/admin/posts', { headers }),
+        ]);
+        if(!usersRes.ok) return alert('Invalid code');
+        const users = await usersRes.json(); const posts = await postsRes.json();
+        render(users.users, posts.posts, code);
+      }catch(e){ alert('Failed'); }
+    });
+
+    function render(users, posts, code){
+      area.innerHTML = '';
+      const uPanel = document.createElement('div'); uPanel.className='panel';
+      uPanel.innerHTML = '<h2>Users</h2>';
+      users.forEach(u=>{
+        const el = document.createElement('div'); el.innerHTML = u.id + ' — ' + u.username + ' ('+u.country+') <button data-id="'+u.id+'">Ban 15m</button> <button data-id="'+u.id+'" class="del">Delete user</button>';
+        uPanel.appendChild(el);
+      });
+      area.appendChild(uPanel);
+
+      const pPanel = document.createElement('div'); pPanel.className='panel'; pPanel.innerHTML='<h2>Posts</h2>';
+      posts.forEach(p=>{
+        const el = document.createElement('div'); el.innerHTML = p.id + ' — ' + (p.title||'') + ' by ' + p.authorName + ' ('+p.country+') <button data-id="'+p.id+'" class="delpost">Delete</button>';
+        pPanel.appendChild(el);
+      });
+      area.appendChild(pPanel);
+
+      area.querySelectorAll('button[data-id]').forEach(btn=> btn.addEventListener('click', async (ev)=>{
+        const id = ev.target.getAttribute('data-id'); if(!confirm('Ban user '+id+' for 15 minutes?')) return;
+        await fetch('/api/admin/ban', { method:'POST', headers: Object.assign({'Content-Type':'application/json'},{'x-admin-code':code}), body: JSON.stringify({ userId: id, minutes:15 }) }); alert('Banned');
+      }));
+
+      area.querySelectorAll('.delpost').forEach(btn=> btn.addEventListener('click', async (ev)=>{ const id = ev.target.getAttribute('data-id'); if(!confirm('Delete post '+id+'?')) return; await fetch('/api/admin/posts/'+id, { method:'DELETE', headers:{'x-admin-code':code} }); alert('Deleted'); }));
+    }
+  })();
+  </script>
+</body>
+</html>
